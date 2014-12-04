@@ -1,0 +1,13 @@
+[Darren 4Dec14]
+
+Upgrading openSceneGraph, osgBullet and osgWorks:
+
+osg is now v3.3.2
+update to osg required some small changes to omegaOsg, but otherwise went smoothly
+
+osgWorks is now revision 565 (post v3.1) from svn (http://osgworks.googlecode.com/svn/trunk/)
+source for v3.0 did not work, after checking the revision logs, (specifically r554) found later versions
+that were updated to work with changes to the osg 3.3.2 api
+
+osgBullet is now revision 385 (post v3.0) from svn (http://osgbullet.googlecode.com/svn/trunk/)
+v3.0 source did not work, used the latest revision instead after looking through revisions

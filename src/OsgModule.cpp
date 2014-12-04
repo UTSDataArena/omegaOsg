@@ -155,7 +155,7 @@ OsgModule::OsgModule():
     String execName;
     StringUtils::splitFilename(execPath, execName, execPath);
     osgDB::Registry* reg = osgDB::Registry::instance();
-    String libPath = execPath + ":" + execPath + String("osg/osgPlugins-3.3.0:") + execPath + String("osg:")+ execPath + String("osgPlugins-3.3.0:");
+    String libPath = execPath + ":" + execPath + String("osg/osgPlugins-3.3.2:") + execPath + String("osg:")+ execPath + String("osgPlugins-3.3.2:");
     ofmsg("OSG Plugin Path(s): %1%", %libPath);
     reg->setLibraryFilePathList(libPath);
 
