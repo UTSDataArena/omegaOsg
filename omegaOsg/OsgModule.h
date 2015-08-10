@@ -1,12 +1,12 @@
 /******************************************************************************
  * THE OMEGA LIB PROJECT
  *-----------------------------------------------------------------------------
- * Copyright 2010-2013		Electronic Visualization Laboratory, 
+ * Copyright 2010-2015		Electronic Visualization Laboratory, 
  *							University of Illinois at Chicago
  * Authors:										
  *  Alessandro Febretti		febret@gmail.com
  *-----------------------------------------------------------------------------
- * Copyright (c) 2010-2013, Electronic Visualization Laboratory,  
+ * Copyright (c) 2010-2015, Electronic Visualization Laboratory,  
  * University of Illinois at Chicago
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without modification, 
@@ -62,6 +62,16 @@ namespace omegaOsg
     using namespace omega;
 
     class OsgSceneObject;
+    class SceneView;
+
+    ///////////////////////////////////////////////////////////////////////////
+    //! A listener that will be notified of osg render pass operations and has
+    //! access to the osg view internals
+    class IOsgRenderPassListener
+    {
+    public:
+        virtual void onFrameFinished(Renderer* client, const DrawContext& context, SceneView* scene) = 0;
+    };
 
     ///////////////////////////////////////////////////////////////////////////
     class OOSG_API OsgModule: public EngineModule
@@ -112,6 +122,16 @@ namespace omegaOsg
 		bool isCompileGLObjectsEnabled(){return compileGLObjects; }
 		void setCompileGLObjects(bool value){compileGLObjects = value;}
 
+        //! Set a listener that will be notified of osg render pass operations
+        void setRenderPassListener(IOsgRenderPassListener* listener)
+        {
+            myRenderPassListener = listener; 
+        }
+        IOsgRenderPassListener* setRenderPassListener()
+        {
+            return myRenderPassListener;
+        }
+
     private:
         static OsgModule* mysInstance;
 
@@ -130,6 +150,8 @@ namespace omegaOsg
         Ref<osg::NodeVisitor> myUpdateVisitor;
         Ref<osgDB::DatabasePager> myDatabasePager;
         List< Ref<OsgRenderPass> > myRenderPasses;
+
+        IOsgRenderPassListener* myRenderPassListener;
     };
 };
 #endif

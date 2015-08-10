@@ -1,12 +1,12 @@
 /******************************************************************************
  * THE OMEGA LIB PROJECT
  *-----------------------------------------------------------------------------
- * Copyright 2010-2013		Electronic Visualization Laboratory, 
+ * Copyright 2010-2015		Electronic Visualization Laboratory, 
  *							University of Illinois at Chicago
  * Authors:										
  *  Alessandro Febretti		febret@gmail.com
  *-----------------------------------------------------------------------------
- * Copyright (c) 2010-2013, Electronic Visualization Laboratory,  
+ * Copyright (c) 2010-2015, Electronic Visualization Laboratory,  
  * University of Illinois at Chicago
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without modification, 
@@ -44,6 +44,7 @@
 #include <osgDB/DatabasePager>
 #include <osg/Node>
 #include <osg/FrameStamp>
+#include <osg/Version>
 
 #include "omegaOsg/ReaderFreeImage.h"
 #ifdef OMEGAOSG_USE_INVENTOR
@@ -131,7 +132,8 @@ OsgModule::OsgModule():
     EngineModule("OsgModule"),
         myDepthPartitionMode(OsgDrawInformation::DepthPartitionOff),
         myDepthPartitionZ(1000),
-        myDisplayDebugOverlay(false)
+        myDisplayDebugOverlay(false),
+        myRenderPassListener(NULL)
 {
     mysInstance = this;
 
@@ -140,7 +142,7 @@ OsgModule::OsgModule():
     myRootNode = NULL;
     //myRootSceneObject = NULL;
 
-	compileGLObjects = true;
+    compileGLObjects = true;
 
     myDatabasePager = osgDB::DatabasePager::create();
 
@@ -155,8 +157,15 @@ OsgModule::OsgModule():
     String execName;
     StringUtils::splitFilename(execPath, execName, execPath);
     osgDB::Registry* reg = osgDB::Registry::instance();
-    String libPath = execPath + ":" + execPath + String("osg/osgPlugins-3.3.2:") + execPath + String("osg:")+ execPath + String("osgPlugins-3.3.2:");
-    ofmsg("OSG Plugin Path(s): %1%", %libPath);
+
+    int vmaj = OPENSCENEGRAPH_MAJOR_VERSION;
+    int vmin = OPENSCENEGRAPH_MINOR_VERSION;
+    int vp = OPENSCENEGRAPH_PATCH_VERSION;
+
+    String osgv = ostr("%1%.%2%.%3%", %vmaj %vmin %vp);
+
+    String libPath = execPath + ":" + execPath + ostr("osg/osgPlugins-%1%:", %osgv) + execPath + String("osg:")+ execPath + ostr("osgPlugins-%1%:", %osgv);
+    oflog(Verbose, "OSG Plugin Path(s): %1%", %libPath);
     reg->setLibraryFilePathList(libPath);
 
     reg->addReaderWriter(new ReaderFreeImage());
@@ -169,7 +178,7 @@ OsgModule::OsgModule():
 ///////////////////////////////////////////////////////////////////////////////
 OsgModule::~OsgModule()
 {
-    omsg("~OsgModule");
+    olog(Verbose, "~OsgModule");
     mysInstance = NULL;
 }
 

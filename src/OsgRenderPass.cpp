@@ -1,12 +1,12 @@
 /******************************************************************************
  * THE OMEGA LIB PROJECT
  *-----------------------------------------------------------------------------
- * Copyright 2010-2013		Electronic Visualization Laboratory, 
+ * Copyright 2010-2015		Electronic Visualization Laboratory, 
  *							University of Illinois at Chicago
  * Authors:										
  *  Alessandro Febretti		febret@gmail.com
  *-----------------------------------------------------------------------------
- * Copyright (c) 2010-2013, Electronic Visualization Laboratory,  
+ * Copyright (c) 2010-2015, Electronic Visualization Laboratory,  
  * University of Illinois at Chicago
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without modification, 
@@ -73,7 +73,7 @@ OsgRenderPass::OsgRenderPass(Renderer* client, const String& name): RenderPass(c
 OsgRenderPass::~OsgRenderPass()
 {
     mySceneView = NULL;
-    myDebugOverlay->unref();
+    //myDebugOverlay->unref();
     myDebugOverlay = NULL;
 }
 
@@ -124,6 +124,10 @@ void OsgRenderPass::drawView(SceneView* view, const DrawContext& context, bool g
     myDrawInfo->context = &context;
     myDrawInfo->depthPartitionMode = dpm;
     cam->setUserData(myDrawInfo);
+
+    // Set the camera culling mode
+    if(context.camera->isCullingEnabled()) cam->setCullingMode(osg::CullSettings::VIEW_FRUSTUM_CULLING);
+    else cam->setCullingMode(osg::CullSettings::NO_CULLING);
 
     cam->setViewport( context.viewport.x(), context.viewport.y(), context.viewport.width(), context.viewport.height() );
     cam->setProjectionMatrix(buildOsgMatrix(context.projection.matrix()));
@@ -230,6 +234,10 @@ void OsgRenderPass::render(Renderer* client, const DrawContext& context)
         {
             myDebugOverlay->update(mySceneView);
             myDebugOverlay->draw(context);
+        }
+        if(myModule->setRenderPassListener())
+        {
+            myModule->setRenderPassListener()->onFrameFinished(client, context, mySceneView);
         }
     }
     //sInitLock.unlock();

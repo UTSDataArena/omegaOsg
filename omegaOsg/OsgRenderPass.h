@@ -1,12 +1,12 @@
 /******************************************************************************
  * THE OMEGA LIB PROJECT
  *-----------------------------------------------------------------------------
- * Copyright 2010-2013		Electronic Visualization Laboratory, 
+ * Copyright 2010-2015		Electronic Visualization Laboratory, 
  *							University of Illinois at Chicago
  * Authors:										
  *  Alessandro Febretti		febret@gmail.com
  *-----------------------------------------------------------------------------
- * Copyright (c) 2010-2013, Electronic Visualization Laboratory,  
+ * Copyright (c) 2010-2015, Electronic Visualization Laboratory,  
  * University of Illinois at Chicago
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without modification, 
@@ -40,9 +40,6 @@
 #include "oosgbase.h"
 #include<osg/Referenced>
 
-
-class SceneView;
-
 namespace osg
 {
     class Node;
@@ -53,6 +50,7 @@ namespace omegaOsg
     using namespace omega;
     class OsgModule;
     class OsgDebugOverlay;
+    class SceneView;
 
     ////////////////////////////////////////////////////////////////////////////
     //! Stores user data that will be passed along with the camera to osg nodes
@@ -115,7 +113,7 @@ namespace omegaOsg
         Ref<Stat> myCullTimeStat;
         Ref<Stat> myDrawTimeStat;
 
-        OsgDebugOverlay* myDebugOverlay;
+        Ref<OsgDebugOverlay> myDebugOverlay;
     };
 };
 #endif

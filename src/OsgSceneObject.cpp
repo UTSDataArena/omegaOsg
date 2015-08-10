@@ -1,12 +1,12 @@
 /******************************************************************************
  * THE OMEGA LIB PROJECT
  *-----------------------------------------------------------------------------
- * Copyright 2010-2013		Electronic Visualization Laboratory, 
+ * Copyright 2010-2015		Electronic Visualization Laboratory, 
  *							University of Illinois at Chicago
  * Authors:										
  *  Alessandro Febretti		febret@gmail.com
  *-----------------------------------------------------------------------------
- * Copyright (c) 2010-2013, Electronic Visualization Laboratory,  
+ * Copyright (c) 2010-2015, Electronic Visualization Laboratory,  
  * University of Illinois at Chicago
  * All rights reserved.
  * Redistribution and use in source and binary forms, with or without 
@@ -108,7 +108,7 @@ void OsgSceneObject::update(const UpdateContext& context)
         oxform.set(m.data());
     }
     myTransform->setMatrix( oxform );
-    //requestBoundingBoxUpdate();
+    requestBoundingBoxUpdate();
 
     //const osg::BoundingSphere& bs = myNode->getBound();
     //Vector3f center(bs.center()[0], bs.center()[1], bs.center()[2]);
@@ -175,21 +175,21 @@ bool OsgSceneObject::intersectRay(const Ray& ray, Vector3f* hitPoint)
     if(getOwner()->isFlagSet(SceneNodeHitPointsFlag))
     {
         Ref<PointIntersector> intersector = new PointIntersector( orig, end );
-		osgUtil::IntersectionVisitor iv( intersector.get() );
-		myTransform->accept(iv);
+        osgUtil::IntersectionVisitor iv( intersector.get() );
+        myTransform->accept(iv);
 
-		if ( intersector->containsIntersections() )
+        if ( intersector->containsIntersections() )
         {
-			PointIntersector::Intersection result = *(intersector->getIntersections().begin());
-			osg::Vec3d intersect = result.getWorldIntersectPoint();
+            PointIntersector::Intersection result = *(intersector->getIntersections().begin());
+            osg::Vec3d intersect = result.getWorldIntersectPoint();
 
-			hitPoint->x() = intersect[0];
-			hitPoint->y() = intersect[1];
-			hitPoint->z() = intersect[2];
-			return true;
-		}
-		else
-			return false;
+            hitPoint->x() = intersect[0];
+            hitPoint->y() = intersect[1];
+            hitPoint->z() = intersect[2];
+            return true;
+        }
+        else
+            return false;
     }
     else
     {
