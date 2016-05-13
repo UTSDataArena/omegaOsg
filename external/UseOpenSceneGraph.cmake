@@ -85,7 +85,9 @@ endif()
 ExternalProject_Add(
     osg
     DEPENDS ${OMEGA_OSG_DEPENDENCIES}
-    URL http://github.com/omega-hub/osg/archive/master.tar.gz
+    ##URL http://github.com/omega-hub/osg/archive/master.tar.gz
+    # Use particular commit as base
+    URL http://github.com/omega-hub/osg/archive/1e9c792.tar.gz
     CMAKE_ARGS ${OSG_ARGS}
     INSTALL_COMMAND ${PLATFORM_INSTALL_COMMAND}
     
