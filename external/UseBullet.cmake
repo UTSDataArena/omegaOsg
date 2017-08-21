@@ -54,7 +54,7 @@ set_target_properties(bullet PROPERTIES FOLDER "3rdparty")
 set(BULLET_INCLUDES ${BULLET_BASE_DIR}/source/src)
 
 set(BULLET_LIB_DIR ${BULLET_BASE_DIR}/build/lib)
-set(BULLET_COMPONENTS BulletDynamics BulletSoftBody BulletCollision LinearMath)
+set(BULLET_COMPONENTS BulletDynamics BulletSoftBody BulletCollision BulletFileLoader BulletWorldImporter BulletXmlWorldImporter ConvexDecomposition LinearMath)
 if(OMEGA_OS_WIN)
 	foreach( C ${BULLET_COMPONENTS})
 		set(${C}_LIBRARY ${BULLET_LIB_DIR}/Release/${C}.lib)
