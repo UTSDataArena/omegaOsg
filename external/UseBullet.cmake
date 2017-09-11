@@ -13,7 +13,7 @@ set(BULLET_BASE_DIR ${CMAKE_BINARY_DIR}/3rdparty/bullet)
 
 ExternalProject_Add(
 	bullet
-	URL ${CMAKE_SOURCE_DIR}/modules/omegaOsg/external/bullet-2.81-rev2613.tar.gz
+	URL ${CMAKE_SOURCE_DIR}/modules/omegaOsg/external/bullet3-2.82.tar.gz
 	CMAKE_GENERATOR ${BULLET_GENERATOR}
 	CMAKE_ARGS
 		-DCMAKE_SHARED_LINKER_FLAGS:STRING=${CMAKE_SHARED_LINKER_FLAGS}
