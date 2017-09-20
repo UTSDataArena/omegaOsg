@@ -31,7 +31,7 @@ endif()
 # right directory.
 # You can find the OSG version in the main osg cmake file around line 54..
 # in the future we can probably pull the value directly from there.
-set(OSG_VERSION "3.3.8" CACHE INTERNAL "")
+set(OSG_VERSION "3.5.1" CACHE INTERNAL "")
 
 # Set the common project arguments
 set(OSG_ARGS
@@ -85,9 +85,8 @@ endif()
 ExternalProject_Add(
     osg
     DEPENDS ${OMEGA_OSG_DEPENDENCIES}
-    ##URL http://github.com/omega-hub/osg/archive/master.tar.gz
-    # Use particular commit as base
-    URL http://github.com/omega-hub/osg/archive/1e9c792.tar.gz
+    # Use particular commit instead of master
+    URL http://github.com/omega-hub/osg/archive/1478091.tar.gz
     CMAKE_ARGS ${OSG_ARGS}
     INSTALL_COMMAND ${PLATFORM_INSTALL_COMMAND}
     
