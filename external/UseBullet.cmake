@@ -23,7 +23,7 @@ ExternalProject_Add(
 		-DBUILD_CPU_DEMOS=OFF
 		-DBUILD_DEMOS=OFF
 		-DUSE_DX11=OFF
-		-DBUILD_EXTRAS=OFF
+        -DBUILD_EXTRAS=ON
 		-DBUILD_NVIDIA_OPENCL_DEMOS=OFF
 		-DBUILD_INTEL_OPENCL_DEMOS=OFF
 		-DBUILD_MINICL_OPENCL_DEMOS=OFF
@@ -33,6 +33,7 @@ ExternalProject_Add(
 		# NOTE: On Windows, windows are not set to be installed by default.
 		# This flag makes sure they get installed.
 		-DINSTALL_LIBS=ON
+        -DINSTALL_EXTRA_LIBS=ON
     -DPKGCONFIG_INSTALL_PREFIX=${BULLET_BASE_DIR}/install/lib/pckconfig
     -DINCLUDE_INSTALL_DIR=${BULLET_BASE_DIR}/install/include
     -DCMAKE_INSTALL_PREFIX=${BULLET_BASE_DIR}/install
